@@ -1,0 +1,47 @@
+[build-system]
+requires        = ['setuptools >= 62.2.0', 'wheel']
+build-backend   = 'setuptools.build_meta'
+
+[project]
+name = "waypointeditor"
+version = "1.0.0"
+description = "Application to create a csv-formatted list of waypoints"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+    { name = "Robert Oostenveld", email = "r.oostenveld@gmail.com" },
+]
+keywords = [
+    "GPS",
+    "waypoints",
+    "stage",
+    "stage plan",
+    "robot",
+    "movement",
+    "trajectory",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: MacOS X",
+    "Environment :: X11 Applications",
+    "Environment :: X11 Applications :: Qt",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Artists",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Topic :: Artistic Software",
+]
+dependencies = [
+    "PyQt5",
+]
+
+[project.scripts]
+waypointeditor = "waypointeditor:main"
+
+[project.urls]
+Homepage = "https://www.robertoostenveld.nl"
+Documentation = "https://github.com/robertoostenveld/waypointeditor/blob/master/README.md"
+Source = "https://github.com/robertoostenveld/waypointeditor/"
+Tracker = "https://github.com/robertoostenveld/waypointeditor/issues"
