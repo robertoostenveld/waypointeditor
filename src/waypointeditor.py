@@ -30,6 +30,9 @@ from PyQt5.QtWidgets import (
 )
 
 def isvalid(s):
+    """
+    Check if a string can be converted to a positive float, this is needed for teh configuration tab
+    """
     try:
         return float(s)>0
     except ValueError:
@@ -37,6 +40,9 @@ def isvalid(s):
 
 
 class AboutDialog(QDialog):
+    """
+    A simple dialog that shows the about text
+    """
     def __init__(self, parent=None):
         super().__init__(parent)
 
@@ -67,6 +73,9 @@ class AboutDialog(QDialog):
 
 
 class HelpDialog(QDialog):
+    """
+    A simple dialog that shows the help text
+    """
     def __init__(self, parent=None):
         super().__init__(parent)
 
@@ -273,7 +282,7 @@ class SettingsTab(QWidget):
             if total_duration < 0:
                 raise ValueError
             average_speed = length_meter / total_duration
-            self.average_speed.setText(f'{average_speed:.2f}')
+            self.average_speed.setText(f'{average_speed:.3f}')
         except (ValueError, ZeroDivisionError):
             average_speed = 0
             self.average_speed.setText(str(""))
@@ -282,7 +291,7 @@ class SettingsTab(QWidget):
             total_duration = float(self.total_duration.text())
             total_rotation = float(self.total_rotation.text())
             angular_speed = total_rotation / total_duration
-            self.angular_speed.setText(f'{angular_speed:.2f}')
+            self.angular_speed.setText(f'{angular_speed:.0f}')
         except (ValueError, ZeroDivisionError):
             self.angular_speed.setText(str(""))
         
@@ -301,6 +310,13 @@ class ExportTab(QWidget):
         
 
 class WaypointEditor(QMainWindow):
+    """
+    The main window of the application. It consists of four tabs:
+    - Image: to display the image and the waypoints
+    - Settings: to configure the scale and the duration
+    - Waypoints: to display the waypoints as a table
+    - Export: to export the waypoints
+    """
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Waypoint Editor')
@@ -338,18 +354,21 @@ class WaypointEditor(QMainWindow):
         new_menu.addSeparator()
         new_menu.addAction("2x1 meter").triggered.connect(lambda: self.new_image(2, 1))
         new_menu.addAction("2x2 meter").triggered.connect(lambda: self.new_image(2, 2))
+        new_menu.addAction("2x3 meter").triggered.connect(lambda: self.new_image(2, 3))
         new_menu.addAction("2x4 meter").triggered.connect(lambda: self.new_image(2, 4))
         new_menu.addSeparator()
         new_menu.addAction("3x1 meter").triggered.connect(lambda: self.new_image(3, 1))
         new_menu.addAction("3x2 meter").triggered.connect(lambda: self.new_image(3, 2))
         new_menu.addAction("3x3 meter").triggered.connect(lambda: self.new_image(3, 3))
-        new_menu.addAction("3x4 meter").triggered.connect(lambda: self.new_image(3, 3))
+        new_menu.addAction("3x4 meter").triggered.connect(lambda: self.new_image(3, 4))
+        new_menu.addAction("3x5 meter").triggered.connect(lambda: self.new_image(3, 5))
         new_menu.addAction("3x6 meter").triggered.connect(lambda: self.new_image(3, 6))
         new_menu.addSeparator()
         new_menu.addAction("4x1 meter").triggered.connect(lambda: self.new_image(4, 1))
         new_menu.addAction("4x2 meter").triggered.connect(lambda: self.new_image(4, 2))
         new_menu.addAction("4x3 meter").triggered.connect(lambda: self.new_image(4, 3))
         new_menu.addAction("4x4 meter").triggered.connect(lambda: self.new_image(4, 4))
+        new_menu.addAction("4x5 meter").triggered.connect(lambda: self.new_image(4, 5))
         new_menu.addAction("4x8 meter").triggered.connect(lambda: self.new_image(4, 8))
         new_menu.addSeparator()
         new_menu.addAction("5x2 meter").triggered.connect(lambda: self.new_image(5, 2))
@@ -358,7 +377,11 @@ class WaypointEditor(QMainWindow):
         new_menu.addSeparator()
         new_menu.addAction("6x3 meter").triggered.connect(lambda: self.new_image(6, 3))
         new_menu.addAction("6x6 meter").triggered.connect(lambda: self.new_image(6, 6))
-        new_menu.addAction("6x12 meter").triggered.connect(lambda: self.new_image(6, 12))
+        new_menu.addAction("6x9 meter").triggered.connect(lambda: self.new_image(6, 9))
+        new_menu.addSeparator()
+        new_menu.addAction("8x2 meter").triggered.connect(lambda: self.new_image(8, 2))
+        new_menu.addAction("8x4 meter").triggered.connect(lambda: self.new_image(8, 4))
+        new_menu.addAction("8x8 meter").triggered.connect(lambda: self.new_image(8, 8))
 
         # Add an "Open Image" action to the "File" menu
         open_image = QAction('Open image', self)
@@ -443,6 +466,10 @@ class WaypointEditor(QMainWindow):
         about_dialog.exec_()
         
     def update_all(self):
+        """
+        Update all tabs in a consistent fashion, i.e., the values from the settings tab are used 
+        together with the points from the image tab to update the waypoints tab and the export tab.
+        """
         has_points   = len(self.image_tab.points) > 0
         has_scale    = isvalid(self.settings_tab.pixels_per_meter.text())
         has_duration = isvalid(self.settings_tab.total_duration.text())
@@ -510,6 +537,9 @@ class WaypointEditor(QMainWindow):
 
 
 def main():
+    """
+    The main entry point for the application when started as the script created by the pip installer.
+    """
     app = QApplication(sys.argv)
     app.setApplicationName("Waypoint Editor")
     viewer = WaypointEditor()
@@ -519,4 +549,7 @@ def main():
 
 
 if __name__ == '__main__':
+    """
+    The main entry point for the application when started from the command line.
+    """
     main()

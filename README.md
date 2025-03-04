@@ -1,20 +1,18 @@
 # Waypoint Editor
 
-This is a graphical application to create a waypoints file that can be used by the EEGsynth robots to move over the stage.
+This is a graphical application to create a waypoints file that can be used by the EEGsynth robots to move over the stage according to a predefined list of waypoints.
 
-It allows reading a stage plan as bitmap image, or you can use one of the template images. The resolution of the image must be specified (in pixels per meter). The default for the built-in templates ios 300 pixels-per-meter.
+You can use one of the template images for the stage, or read a stage plan from a bitmap file. 
 
-The bottom of the screen corresponds to the audience, the top of the screen to the back of the stage.
+The bottom of the image that will be displayed corresponds to the audience, the top of the screen to the back of the stage. Positive x values are to the top of the screen, away from the audience. Positive y values are to the left of the screen and audience. Positive rotations are counter-clock-wise.
 
-After clicking on a number of points that you want the robot to follow, you have to specify the total duration that the path will take. The application will compute a constant speed over all segments so that the path will be completed withing the requested time. You can also specify a total rotation, which will cause the robot to rotate (also evenly) over the whole path.
+When reading the stage plan from a file, you must specify the resolution of the image as pixels-per_meter. The default for the built-in templates is 300 pixels-per-meter. To determine the resolution in your image or drawing, you can click two known points in the image to make a path that consists of a single segment, look at the number of pixels that the path corresponds to, and divide that by the known distance.
 
-Positive x values are to the top of the screen, away from the audience. Positive y values are to the left of the screen and audience. Positive rotations are counter-clock-wise.
+Press Z to clear the last point. Press C to clear all points.
 
-## Making a packaged executable
+After clicking on the points that you want the robot to travel along, you have to specify in the settings tab the "total duration" (in seconds) that the path will take. The application will compute a constant speed over all segments that corresponds with the requested duration. You can also specify the "total rotation", which will cause the robot to rotate (also evenly distributed) over the whole path.
 
-On macOS it is possible to package this into `waypointeditor.app` by using
-
-    pyinstaller --onefile src/waypointeditor.py 
+To insert a pause or to change the robot to go faster or slower over some segments of the specified path, you will have to importy the waypoints into Excel or Numbers and edit the table there.  
 
 ## License
 

@@ -2,3 +2,5 @@ build
 dist
 waypointeditor.spec
 .DS_Store
+waypointeditor.spec
+Waypoint Editor.spec
